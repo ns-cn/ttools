@@ -18,8 +18,13 @@ var (
 )
 
 var root = &cobra.Command{
-	Short: "tools for string lines",
-	Long:  "tools for string lines",
+	Short: "针对文本的逐行读取小工具",
+	Long: `
+针对文件内文本的逐行读取及简易编辑操作
+1. 编辑行前缀（行号占位符）
+2. 编辑行后缀（暂未实现）
+3. 支持跳过空白行（空格、tab等空白字符）
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if file == "" {
 			cmd.Help()
