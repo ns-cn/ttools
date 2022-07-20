@@ -4,6 +4,16 @@ tiny tools: 小工具集合
 # lines
 用于文本文件的逐行的处理，支持增加前缀、后缀、去除空白字符、跳过空白行
 
+#### 安装
+方式1、通过brew安装
+```shell
+brew tap ns-cn/ttools && brew install lines
+```
+方式2、手动安装，下载地址如下
+```
+https://github.com/ns-cn/ttools/releases/download/v.lines%40latest/
+```
+
 #### 使用实例
 ```shell
 # 增加文件前缀: 实例为为mine.txt中非空白行增加行号显示并显示原始文件行号
