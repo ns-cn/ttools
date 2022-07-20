@@ -6,8 +6,9 @@ tiny tools: 小工具集合
 
 #### 使用实例
 ```shell
-# 增加文件前缀
+# 增加文件前缀: 实例为为mine.txt中非空白行增加行号显示并显示原始文件行号
 > lines.exe prefix -F mine.txt -c "第#number行. " -n "%3d" -os
+> lines.exe prefix --file mine.txt --content "第#number行. " --number "%3d" --skipEmpty --keepOriginal
 # 增加文件后缀
 > lines.exe suffix -F mine.txt -c "第#number行. " -n "%3d" -os
 # 去除左侧的空白字符
