@@ -71,6 +71,7 @@ func LineAction(cmd *cobra.Command, action func(line string)) {
 			line, err := reader.ReadString('\n')
 			if err != nil {
 				if err == io.EOF {
+					action(line)
 					break
 				} else {
 					fmt.Println("Read file error!", err)

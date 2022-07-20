@@ -33,6 +33,7 @@ lines prefix [-F {filepath}| -P] [-p {prefix-format}] [-N {lineIndex-format}] [-
 			if strings.TrimSpace(line) == "" && skipEmpty {
 				return
 			}
+			index++
 			var number string
 			if keepOriginal {
 				number = fmt.Sprintf(format, original)
@@ -40,7 +41,6 @@ lines prefix [-F {filepath}| -P] [-p {prefix-format}] [-N {lineIndex-format}] [-
 				number = fmt.Sprintf(format, index)
 			}
 			fmt.Printf("%s%s", strings.ReplaceAll(content, LINE, number), line)
-			index++
 		})
 	},
 }
@@ -59,6 +59,7 @@ lines suffix [-F {filepath}| -P] [- {content}] [-n {number-format}] [-os]`,
 			if strings.TrimSpace(line) == "" && skipEmpty {
 				return
 			}
+			index++
 			var number string
 			if keepOriginal {
 				number = fmt.Sprintf(format, original)
@@ -66,7 +67,6 @@ lines suffix [-F {filepath}| -P] [- {content}] [-n {number-format}] [-os]`,
 				number = fmt.Sprintf(format, index)
 			}
 			fmt.Printf("%s%s\n", line[:len(line)-1], strings.ReplaceAll(content, LINE, number))
-			index++
 		})
 	},
 }
