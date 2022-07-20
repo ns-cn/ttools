@@ -2,21 +2,33 @@
 tiny tools
 
 # lines
-用于单行的处理，目前只支持行首的处理
-1. 支持```-P```(或```--prefix```)为每行增加前缀，支持#number占位符标识行号
-2. 支持```-N```(或```--number```)格式化行号，例如%4d为4位长度
-3. 支持```-S```(或```--skipEmpty```)跳过空白行
+用于文本文件的逐行的处理，支持增加前缀、后缀、去除空白字符、跳过空白行
 
 #### 使用实例
 ```shell
-# 处理mine.txt文件，为行首增加居左显示3位宽度的行号，并使用|分割行号和正文
-> lines.exe -F mine.txt -P "#number|" -N "%-3d" -S false
-# 重定向输出到target.txt，方便后续编辑读取等操作
-> lines.exe -F mine.txt -P "#number|" -N "%-3d" -S false >> target.txt
+# 增加文件前缀
+> lines.exe prefix -F mine.txt -c "第#number行. " -n "%3d" -os
+# 增加文件后缀
+> lines.exe suffix -F mine.txt -c "第#number行. " -n "%3d" -os
+# 去除左侧的空白字符
+> lines.exe trimleft -F mine.txt
+# 去除右侧的空白字符
+> lines.exe trimright -F mine.txt
+# 去除左右两侧的空白字符
+> lines.exe trim -F mine.txt
+# 跳过空白行
+> lines.exe skipempty -F mine.txt
+
+# 管道连续操作
+> lines.exe trim -F mine.txt | lines.exe skipempty | lines.exe prefix -c "第#number行. " >> output.txt
 ```
 
+> 完整文档参见：```lines.exe --help```
+
 #### 后续支持计划
-- [ ] 支持从管道读取
-- [ ] 支持行尾编辑操作
+- [x] 支持从管道读取
+- [x] 支持行尾编辑操作
+- [ ] 支持行内替换操作
+- [ ] 支持指定行范围操作
 - [ ] 支持应用内级别的文件写入
 - [ ] 支持多文件同时处理并写入文件（支持文件位置指定）

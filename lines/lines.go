@@ -6,15 +6,16 @@ import (
 	"github.com/spf13/cobra"
 	"io"
 	"os"
-	"strings"
+)
+
+const (
+	// LINE 占位符
+	LINE = "#number"
 )
 
 var (
-	LINE      = "#number"
-	file      = ""
-	format    = "%d"
-	prefix    = ""
-	skipEmpty = false
+	// 数据源
+	filePath = ""
 )
 
 var root = &cobra.Command{
@@ -26,11 +27,31 @@ var root = &cobra.Command{
 3. 支持跳过空白行（空格、tab等空白字符）
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		if file == "" {
-			cmd.Help()
-			return
-		}
-		file, err := os.OpenFile(file, os.O_RDWR, 0666)
+		cmd.Help()
+	},
+}
+
+func main() {
+	initCmdTrim()
+	initSkipEmpty()
+	initPrefix()
+
+	root.AddCommand(CmdPrefix)    // 前缀
+	root.AddCommand(CmdSuffix)    // 后缀
+	root.AddCommand(CmdTrim)      // 去除先后的空白字符
+	root.AddCommand(CmdTrimLeft)  // 去除左侧的空白字符
+	root.AddCommand(CmdTrimRight) // 去除右侧的空白字符
+	root.AddCommand(CmdSkipEmpty) // 跳过空白字符行
+	// 数据源
+	root.Execute()
+}
+
+func FileAction(cmd *cobra.Command, action func(*bufio.Reader)) {
+	var reader *bufio.Reader
+	if filePath == "" {
+		reader = bufio.NewReader(os.Stdin)
+	} else {
+		file, err := os.OpenFile(filePath, os.O_RDWR, 0666)
 		if err != nil {
 			os.Stderr.WriteString(fmt.Sprintf("Open file error!%s\n", err.Error()))
 			return
@@ -39,10 +60,15 @@ var root = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
-		buf := bufio.NewReader(file)
-		var index = 0
+		reader = bufio.NewReader(file)
+	}
+	action(reader)
+}
+
+func LineAction(cmd *cobra.Command, action func(line string)) {
+	FileAction(cmd, func(reader *bufio.Reader) {
 		for {
-			line, err := buf.ReadString('\n')
+			line, err := reader.ReadString('\n')
 			if err != nil {
 				if err == io.EOF {
 					break
@@ -51,21 +77,7 @@ var root = &cobra.Command{
 					return
 				}
 			}
-			if strings.TrimSpace(line) == "" && skipEmpty {
-				continue
-			}
-			number := fmt.Sprintf(format, index)
-			fmt.Printf("%s%s", strings.ReplaceAll(prefix, LINE, number), line)
-			index++
+			action(line)
 		}
-	},
-}
-
-func main() {
-	root.Flags().StringVarP(&file, "file", "F", "", "[*]目标文件")
-	root.Flags().StringVarP(&prefix, "prefix", "P", "#number", "行前置格式化内容，其中#number为占位符标示行号, \n"+
-		"例如\"#number|\"表示使用下划线分割行号和正文")
-	root.Flags().StringVarP(&format, "number", "N", "%d", "行号的格式化风格，例如%4d，则格式化为4位，%-4d则4位居左")
-	root.Flags().BoolVarP(&skipEmpty, "skipEmpty", "S", false, "是否跳过空白行，例如true表示跳过空白行")
-	root.Execute()
+	})
 }
