@@ -11,7 +11,7 @@ brew tap ns-cn/ttools && brew install lines
 ```
 方式2、手动安装，下载地址如下
 ```
-https://github.com/ns-cn/ttools/releases/download/v.lines%40latest/
+https://github.com/ns-cn/ttools/releases/
 ```
 
 #### 使用实例
