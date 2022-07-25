@@ -11,24 +11,24 @@ var CmdReplace = &cobra.Command{
 	Aliases: []string{"r"},
 	Short:   "为文本增加前缀",
 	Long: `逐行为文本增加前缀;
-lines prefix [-F {filepath}| -P] [-p {prefix-format}] [-N {lineIndex-format}] [-os]
+lines prefix [-F {filepath}| -P] [-p {prefix-numberFormat}] [-N {lineIndex-numberFormat}] [-os]
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		var index = 0
 		var original = 0
-		LineAction(cmd, func(line string) {
+		LineAction(cmd, func(line string) string {
 			original++
 			if strings.TrimSpace(line) == "" && skipEmpty {
-				return
+				return ""
 			}
 			var number string
 			if keepOriginal {
-				number = fmt.Sprintf(format, original)
+				number = fmt.Sprintf(numberFormat, original)
 			} else {
-				number = fmt.Sprintf(format, index)
+				number = fmt.Sprintf(numberFormat, index)
 			}
-			fmt.Printf("%s%s", strings.ReplaceAll(content, LINE, number), line)
 			index++
+			return fmt.Sprintf("%s%s", strings.ReplaceAll(box, LINE, number), line)
 		})
 	},
 }

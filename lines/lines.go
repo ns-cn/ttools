@@ -3,9 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/atotto/clipboard"
 	"github.com/spf13/cobra"
 	"io"
 	"os"
+	"strings"
 )
 
 const (
@@ -15,19 +17,18 @@ const (
 
 var (
 	// 数据源
-	filePath = ""
+	filePath      = ""
+	fromClipboard = false // 是否从粘贴板读取字符数据，优先级第一
+	toClipboard   = false // 是否将结果写入到粘贴板而不是命令行标准输出
 )
 
 var root = &cobra.Command{
 	Short: "针对文本的逐行读取小工具",
 	Long: `
 针对文件内文本的逐行读取及简易编辑操作
-1. 编辑行前缀（行号占位符）
-2. 编辑行后缀（暂未实现）
-3. 支持跳过空白行（空格、tab等空白字符）
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
+		_ = cmd.Help()
 	},
 }
 
@@ -43,17 +44,24 @@ func main() {
 	root.AddCommand(CmdTrimRight) // 去除右侧的空白字符
 	root.AddCommand(CmdSkipEmpty) // 跳过空白字符行
 	// 数据源
-	root.Execute()
+	_ = root.Execute()
 }
 
-func FileAction(cmd *cobra.Command, action func(*bufio.Reader)) {
+func InputAction(cmd *cobra.Command, action func(*bufio.Reader)) {
 	var reader *bufio.Reader
-	if filePath == "" {
+	if fromClipboard {
+		clipboardString, err := clipboard.ReadAll()
+		if err != nil {
+			handleErrWithTips("读取粘贴板失败", err)
+			return
+		}
+		reader = bufio.NewReader(strings.NewReader(clipboardString))
+	} else if filePath == "" {
 		reader = bufio.NewReader(os.Stdin)
 	} else {
 		file, err := os.OpenFile(filePath, os.O_RDWR, 0666)
 		if err != nil {
-			os.Stderr.WriteString(fmt.Sprintf("Open file error!%s\n", err.Error()))
+			handleErrWithTips("open file error!", err)
 			return
 		}
 		defer file.Close()
@@ -65,20 +73,34 @@ func FileAction(cmd *cobra.Command, action func(*bufio.Reader)) {
 	action(reader)
 }
 
-func LineAction(cmd *cobra.Command, action func(line string)) {
-	FileAction(cmd, func(reader *bufio.Reader) {
+/*LineAction
+行处理函数，需要传递单行文本处理函数供统筹处理
+*/
+func LineAction(cmd *cobra.Command, action func(line string) string) {
+	InputAction(cmd, func(reader *bufio.Reader) {
+		result := strings.Builder{}
 		for {
 			line, err := reader.ReadString('\n')
 			if err != nil {
 				if err == io.EOF {
-					action(line)
+					actionResult := action(line)
+					result.WriteString(actionResult)
 					break
 				} else {
-					fmt.Println("Read file error!", err)
+					handleErrWithTips("Read file error!", err)
 					return
 				}
 			}
-			action(line)
+			actionResult := action(line)
+			result.WriteString(actionResult)
+		}
+		if toClipboard {
+			err := clipboard.WriteAll(result.String())
+			if err != nil {
+				_, _ = os.Stderr.WriteString(err.Error())
+			}
+		} else {
+			fmt.Println(result.String())
 		}
 	})
 }

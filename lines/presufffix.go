@@ -8,8 +8,8 @@ import (
 
 var (
 	// 导出格式的处理
-	format  = "%d"
-	content = ""
+	numberFormat = "%d"
+	box          = ""
 
 	// 范围的处理
 
@@ -23,24 +23,24 @@ var CmdPrefix = &cobra.Command{
 	Aliases: []string{"pf"},
 	Short:   "为文本增加前缀",
 	Long: `逐行为文本增加前缀;
-lines prefix [-F {filepath}| -P] [-p {prefix-format}] [-N {lineIndex-format}] [-os]
+lines prefix [-F {filepath}| -P] [-p {prefix-numberFormat}] [-N {lineIndex-numberFormat}] [-os]
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		var index = 0
 		var original = 0
-		LineAction(cmd, func(line string) {
+		LineAction(cmd, func(line string) string {
 			original++
 			if strings.TrimSpace(line) == "" && skipEmpty {
-				return
+				return ""
 			}
 			index++
 			var number string
 			if keepOriginal {
-				number = fmt.Sprintf(format, original)
+				number = fmt.Sprintf(numberFormat, original)
 			} else {
-				number = fmt.Sprintf(format, index)
+				number = fmt.Sprintf(numberFormat, index)
 			}
-			fmt.Printf("%s%s", strings.ReplaceAll(content, LINE, number), line)
+			return fmt.Sprintf("%s%s", strings.ReplaceAll(box, LINE, number), line)
 		})
 	},
 }
@@ -50,43 +50,49 @@ var CmdSuffix = &cobra.Command{
 	Aliases: []string{"sf"},
 	Short:   "为文本增加后缀",
 	Long: `逐行为文本增加后缀;
-lines suffix [-F {filepath}| -P] [- {content}] [-n {number-format}] [-os]`,
+lines suffix [-F {filepath}| -P] [- {box}] [-n {number-numberFormat}] [-os]`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var index = 0
 		var original = 0
-		LineAction(cmd, func(line string) {
+		LineAction(cmd, func(line string) string {
 			original++
 			if strings.TrimSpace(line) == "" && skipEmpty {
-				return
+				return ""
 			}
 			index++
 			var number string
 			if keepOriginal {
-				number = fmt.Sprintf(format, original)
+				number = fmt.Sprintf(numberFormat, original)
 			} else {
-				number = fmt.Sprintf(format, index)
+				number = fmt.Sprintf(numberFormat, index)
 			}
-			fmt.Printf("%s%s\n", line[:len(line)-1], strings.ReplaceAll(content, LINE, number))
+			return fmt.Sprintf("%s%s\n", line[:len(line)-1], strings.ReplaceAll(box, LINE, number))
 		})
 	},
 }
 
 func initPrefix() {
-	// ----------------前缀----------------
 	CmdPrefix.Flags().StringVarP(&filePath, "file", "F", "", "目标文件, 不指定则从管道中读取")
+	CmdPrefix.Flags().BoolVarP(&fromClipboard, "fromClipboard", "C", false, "是否从粘贴板读取数据作为格式化数据的数据源")
+	CmdPrefix.Flags().BoolVarP(&toClipboard, "toClipboard", "c", false, "是否将处理结果粘贴到粘贴板（默认输出到标准输出）")
+	CmdSuffix.Flags().StringVarP(&filePath, "file", "F", "", "目标文件, 不指定则从管道中读取")
+	CmdSuffix.Flags().BoolVarP(&fromClipboard, "fromClipboard", "C", false, "是否从粘贴板读取数据作为格式化数据的数据源")
+	CmdSuffix.Flags().BoolVarP(&toClipboard, "toClipboard", "c", false, "是否将处理结果粘贴到粘贴板（默认输出到标准输出）")
+	// ----------------前缀----------------
 	// 格式数据
-	CmdPrefix.Flags().StringVarP(&content, "content", "c", "", "目标位置填写内容，其中#number为占位符标示行号, \n"+
+	CmdPrefix.Flags().StringVarP(&box, "box", "b", "", "目标位置填写内容，其中#number为占位符标示行号, \n"+
 		"例如\"#number|\"表示使用下划线分割行号和正文")
-	CmdPrefix.Flags().StringVarP(&format, "number", "n", "%d", "行号的格式化风格，例如%4d，则格式化为4位，%-4d则4位居左")
+	CmdPrefix.Flags().StringVarP(&numberFormat, "number", "n", "%d", "行号的格式化风格，例如%4d，则格式化为4位，%-4d则4位居左")
 	// 空白行处理
 	CmdPrefix.Flags().BoolVarP(&skipEmpty, "skipEmpty", "s", false, "是否跳过空白行，例如true表示跳过空白行")
 	CmdPrefix.Flags().BoolVarP(&keepOriginal, "keepOriginal", "o", true, "非空白字符行保持原有行号还是连续编号，为false则针对显示字符行进行连续边行")
 
 	// ----------------后缀----------------
-	CmdSuffix.Flags().StringVarP(&filePath, "file", "F", "", "目标文件, 不指定则从管道中读取")
-	CmdSuffix.Flags().StringVarP(&content, "content", "c", "", "目标位置填写内容，其中#number为占位符标示行号, \n"+
+	// 格式数据
+	CmdSuffix.Flags().StringVarP(&box, "box", "b", "", "目标位置填写内容，其中#number为占位符标示行号, \n"+
 		"例如\"#number|\"表示使用下划线分割行号和正文")
-	CmdSuffix.Flags().StringVarP(&format, "number", "n", "%d", "行号的格式化风格，例如%4d，则格式化为4位，%-4d则4位居左")
+	CmdSuffix.Flags().StringVarP(&numberFormat, "number", "n", "%d", "行号的格式化风格，例如%4d，则格式化为4位，%-4d则4位居左")
+	// 空白行处理
 	CmdSuffix.Flags().BoolVarP(&skipEmpty, "skipEmpty", "s", false, "是否跳过空白行，例如true表示跳过空白行")
 	CmdSuffix.Flags().BoolVarP(&keepOriginal, "keepOriginal", "o", true, "非空白字符行保持原有行号还是连续编号，为false则针对显示字符行进行连续边行")
 }
