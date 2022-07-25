@@ -12,7 +12,8 @@ import (
 
 const (
 	// LINE 占位符
-	LINE = "#number"
+	LINE    = "#number"
+	VERSION = "1.02"
 )
 
 var (
@@ -43,6 +44,7 @@ func main() {
 	root.AddCommand(CmdTrimLeft)  // 去除左侧的空白字符
 	root.AddCommand(CmdTrimRight) // 去除右侧的空白字符
 	root.AddCommand(CmdSkipEmpty) // 跳过空白字符行
+	root.AddCommand(CmdVersion)   // 打印版本号
 	// 数据源
 	_ = root.Execute()
 }
