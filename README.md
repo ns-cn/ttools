@@ -16,6 +16,9 @@ https://github.com/ns-cn/ttools/releases/download/v.lines%40latest/
 
 #### 使用实例
 ```shell
+# 查看程序版本号
+> lines.exe version
+
 # 增加文件前缀: 实例为为mine.txt中非空白行增加行号显示并显示原始文件行号
 > lines.exe prefix -F mine.txt -b "第#number行. " -n "%3d" -os
 > lines.exe prefix --file mine.txt --box "第#number行. " --number "%3d" --skipEmpty --keepOriginal
