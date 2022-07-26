@@ -13,7 +13,7 @@ import (
 const (
 	// LINE 占位符
 	LINE    = "#number"
-	VERSION = "1.02"
+	VERSION = "1.03"
 )
 
 var (
@@ -37,9 +37,11 @@ func main() {
 	initCmdTrim()
 	initSkipEmpty()
 	initPrefix()
+	initReplace()
 
 	root.AddCommand(CmdPrefix)    // 前缀
 	root.AddCommand(CmdSuffix)    // 后缀
+	root.AddCommand(CmdReplace)   // 替换操作
 	root.AddCommand(CmdTrim)      // 去除先后的空白字符
 	root.AddCommand(CmdTrimLeft)  // 去除左侧的空白字符
 	root.AddCommand(CmdTrimRight) // 去除右侧的空白字符

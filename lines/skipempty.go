@@ -21,6 +21,6 @@ var CmdSkipEmpty = &cobra.Command{
 
 func initSkipEmpty() {
 	CmdSkipEmpty.Flags().StringVarP(&filePath, "file", "F", "", "目标文件, 不指定则从管道中读取")
-	CmdSkipEmpty.Flags().BoolVarP(&fromClipboard, "fromClipboard", "C", false, "是否从粘贴板读取数据作为格式化数据的数据源")
+	CmdSkipEmpty.Flags().BoolVarP(&fromClipboard, "fromClipboard", "C", false, "是否从粘贴板读取数据作为格式化数据的数据源，如果为true，则不需要指定file参数")
 	CmdSkipEmpty.Flags().BoolVarP(&toClipboard, "toClipboard", "c", false, "是否将处理结果粘贴到粘贴板（默认输出到标准输出）")
 }

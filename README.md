@@ -24,6 +24,10 @@ https://github.com/ns-cn/ttools/releases/
 > lines.exe prefix --file mine.txt --box "第#number行. " --number "%3d" --skipEmpty --keepOriginal
 # 增加文件后缀
 > lines.exe suffix -F mine.txt -b "第#number行. " -n "%3d" -os
+# 替换操作
+> lines.exe replace -F mine.txt -f "lines.exe" -t "lines"
+# 正则替换操作
+> lines.exe replace -F mine.txt -f "[\s]*" -t "" -r
 # 去除左侧的空白字符
 > lines.exe trimleft -F mine.txt
 # 去除右侧的空白字符
@@ -50,7 +54,7 @@ https://github.com/ns-cn/ttools/releases/
 - [x] 支持从管道读取(since v1.01)
 - [x] 支持行尾编辑操作(since v1.01)
 - [x] 支持粘贴板交互操作(since v1.02)
-- [ ] 支持行内替换操作
+- [x] 支持行内替换操作(since v1.03)
 - [ ] 支持指定行范围操作
 - [ ] 支持应用内级别的文件写入
 - [ ] 支持多文件同时处理并写入文件（支持文件位置指定）
