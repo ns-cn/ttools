@@ -23,14 +23,14 @@ var CmdPrefix = &cobra.Command{
 	Aliases: []string{"pf"},
 	Short:   "为文本增加前缀",
 	Long: `逐行为文本增加前缀;
-lines prefix [-F {filepath}| -P] [-p {prefix-numberFormat}] [-N {lineIndex-numberFormat}] [-os]
+lines prefix [-F {filepath}| -C] [-p {prefix-numberFormat}] [-N {lineIndex-numberFormat}] [-os] [-c]
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		var index = 0
 		var original = 0
-		LineAction(cmd, func(line string) string {
+		LineAction(cmd, func(line Line) string {
 			original++
-			if strings.TrimSpace(line) == "" && skipEmpty {
+			if strings.TrimSpace(line.value) == "" && skipEmpty {
 				return ""
 			}
 			index++
@@ -40,7 +40,7 @@ lines prefix [-F {filepath}| -P] [-p {prefix-numberFormat}] [-N {lineIndex-numbe
 			} else {
 				number = fmt.Sprintf(numberFormat, index)
 			}
-			return fmt.Sprintf("%s%s", strings.ReplaceAll(box, LINE, number), line)
+			return fmt.Sprintf("%s%s", strings.ReplaceAll(box, LINE, number), line.value)
 		})
 	},
 }
@@ -54,9 +54,9 @@ lines suffix [-F {filepath}| -P] [- {box}] [-n {number-numberFormat}] [-os]`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var index = 0
 		var original = 0
-		LineAction(cmd, func(line string) string {
+		LineAction(cmd, func(line Line) string {
 			original++
-			if strings.TrimSpace(line) == "" && skipEmpty {
+			if strings.TrimSpace(line.value) == "" && skipEmpty {
 				return ""
 			}
 			index++
@@ -66,18 +66,12 @@ lines suffix [-F {filepath}| -P] [- {box}] [-n {number-numberFormat}] [-os]`,
 			} else {
 				number = fmt.Sprintf(numberFormat, index)
 			}
-			return fmt.Sprintf("%s%s\n", line[:len(line)-1], strings.ReplaceAll(box, LINE, number))
+			return fmt.Sprintf("%s%s\n", line.value[:len(line.value)-1], strings.ReplaceAll(box, LINE, number))
 		})
 	},
 }
 
 func initPrefix() {
-	CmdPrefix.Flags().StringVarP(&filePath, "file", "F", "", "目标文件, 不指定则从管道中读取")
-	CmdPrefix.Flags().BoolVarP(&fromClipboard, "fromClipboard", "C", false, "是否从粘贴板读取数据作为格式化数据的数据源，如果为true，则不需要指定file参数")
-	CmdPrefix.Flags().BoolVarP(&toClipboard, "toClipboard", "c", false, "是否将处理结果粘贴到粘贴板（默认输出到标准输出）")
-	CmdSuffix.Flags().StringVarP(&filePath, "file", "F", "", "目标文件, 不指定则从管道中读取")
-	CmdSuffix.Flags().BoolVarP(&fromClipboard, "fromClipboard", "C", false, "是否从粘贴板读取数据作为格式化数据的数据源，如果为true，则不需要指定file参数")
-	CmdSuffix.Flags().BoolVarP(&toClipboard, "toClipboard", "c", false, "是否将处理结果粘贴到粘贴板（默认输出到标准输出）")
 	// ----------------前缀----------------
 	// 格式数据
 	CmdPrefix.Flags().StringVarP(&box, "box", "b", "", "目标位置填写内容，其中#number为占位符标示行号, \n"+

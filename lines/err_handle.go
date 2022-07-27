@@ -10,6 +10,7 @@ func handleErrWithTips(tip string, err error) {
 	handleErrString(tip, err.Error())
 }
 func handleErrString(err ...string) {
+	_, _ = os.Stderr.WriteString("ERR: ")
 	for _, errStr := range err {
 		_, _ = os.Stderr.WriteString(errStr)
 	}

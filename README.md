@@ -37,6 +37,11 @@ https://github.com/ns-cn/ttools/releases/
 # 跳过空白行
 > lines.exe skipempty -F mine.txt
 
+# 范围操作
+# 仅保留第三行后的所有行
+> lines.exe pf -F mine.txt -R "[3:]" -b "第#number行. " -n "%3d" -os
+# 处理3到20行，保留20行之前的所有行
+> lines.exe pf -F mine.txt -R "3:20]" -b "第#number行. " -n "%3d" -os
 # 粘贴板交互
 # 将结果直接写入粘贴板
 > lines.exe trim -F mine.txt -c  #或者使用全参 lines.exe trim -F mine.txt --toClipboard
@@ -55,7 +60,7 @@ https://github.com/ns-cn/ttools/releases/
 - [x] 支持行尾编辑操作(since v1.01)
 - [x] 支持粘贴板交互操作(since v1.02)
 - [x] 支持行内替换操作(since v1.03)
-- [ ] 支持指定行范围操作
+- [x] 支持指定行范围操作(since v1.04)
 - [ ] 支持应用内级别的文件写入
 - [ ] 支持多文件同时处理并写入文件（支持文件位置指定）
 - [ ] 简单GUI

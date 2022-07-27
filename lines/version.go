@@ -10,6 +10,6 @@ var CmdVersion = &cobra.Command{
 	Aliases: []string{"v"},
 	Short:   "打印当前版本号",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(fmt.Sprintf("v.%s", VERSION))
+		fmt.Println(fmt.Sprintf("v%s", VERSION))
 	},
 }
