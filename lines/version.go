@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"runtime"
 )
 
 var CmdVersion = &cobra.Command{
@@ -10,6 +11,6 @@ var CmdVersion = &cobra.Command{
 	Aliases: []string{"v"},
 	Short:   "打印当前版本号",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(fmt.Sprintf("v%s", VERSION))
+		fmt.Println(fmt.Sprintf("lines version: v%s(%s/%s)", VERSION, runtime.GOOS, runtime.GOARCH))
 	},
 }
