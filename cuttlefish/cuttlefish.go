@@ -1,11 +1,8 @@
 package main
 
 import (
+	"github.com/ns-cn/ttools"
 	"github.com/spf13/cobra"
-)
-
-const (
-	VERSION = "1.0"
 )
 
 var root = &cobra.Command{
@@ -18,7 +15,7 @@ var root = &cobra.Command{
 }
 
 func main() {
-	root.AddCommand(CmdVersion) // 打印版本号
+	root.AddCommand(ttools.VersionCommand("cuttlefish", VERSION)) // 打印版本号
 	// 数据源
 	_ = root.Execute()
 }

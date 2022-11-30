@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/atotto/clipboard"
+	"github.com/ns-cn/ttools"
 	"github.com/spf13/cobra"
 	"io"
 	"os"
@@ -15,7 +16,6 @@ import (
 const (
 	// LINE 占位符
 	LINE               = "#number"
-	VERSION            = "1.04"
 	REG_LINERANGE      = "\\A\\[?\\d*[:,]\\d*\\]?$"
 	REG_LINERANGESTART = "\\d+[:,]"
 	REG_LINERANGEEND   = "[:,]\\d+"
@@ -46,14 +46,14 @@ var root = &cobra.Command{
 func main() {
 	initPrefix()
 	initReplace()
-	RegisterLineCommand(CmdPrefix)    // 前缀
-	RegisterLineCommand(CmdSuffix)    // 后缀
-	RegisterLineCommand(CmdReplace)   // 替换操作
-	RegisterLineCommand(CmdTrim)      // 去除先后的空白字符
-	RegisterLineCommand(CmdTrimLeft)  // 去除左侧的空白字符
-	RegisterLineCommand(CmdTrimRight) // 去除右侧的空白字符
-	RegisterLineCommand(CmdSkipEmpty) // 跳过空白字符行
-	root.AddCommand(CmdVersion)       // 打印版本号
+	RegisterLineCommand(CmdPrefix)                           // 前缀
+	RegisterLineCommand(CmdSuffix)                           // 后缀
+	RegisterLineCommand(CmdReplace)                          // 替换操作
+	RegisterLineCommand(CmdTrim)                             // 去除先后的空白字符
+	RegisterLineCommand(CmdTrimLeft)                         // 去除左侧的空白字符
+	RegisterLineCommand(CmdTrimRight)                        // 去除右侧的空白字符
+	RegisterLineCommand(CmdSkipEmpty)                        // 跳过空白字符行
+	root.AddCommand(ttools.VersionCommand("lines", VERSION)) // 打印版本号
 	// 数据源
 	_ = root.Execute()
 }
@@ -126,7 +126,8 @@ func InputAction(cmd *cobra.Command, action func(*bufio.Reader)) {
 	action(reader)
 }
 
-/*LineAction
+/*
+LineAction
 行处理函数，需要传递单行文本处理函数供统筹处理
 */
 func LineAction(cmd *cobra.Command, action func(line Line) string) {
