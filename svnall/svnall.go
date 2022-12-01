@@ -50,8 +50,8 @@ var update = &cobra.Command{
 func main() {
 	root.AddCommand(ttools.VersionCommand("svnall", VERSION))
 	root.AddCommand(update)
-	update.Flags().IntVarP(&depth, "depth", "d", -1, "the depth searching in dir")
-	update.Flags().BoolVarP(&exclude, "exclude", "e", false, "是否排除环境变量配置仓库,默认不排除")
+	update.Flags().IntVarP(&depth, "depth", "d", -1, "the depth searching in dir(不指定则使用环境变量：SVNALL_DEPTH，默认值2)")
+	update.Flags().BoolVarP(&exclude, "exclude", "e", false, "是否排除环境变量配置仓库,默认不排除（环境变量：SVNALL_REPOSITORIES）")
 	update.Flags().BoolVarP(&fullThrough, "through", "t", false, "是否已经找到.svn继续往下查找，默认不继续往下")
 	// 数据源
 	_ = root.Execute()
