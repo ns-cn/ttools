@@ -12,14 +12,16 @@ https://github.com/ns-cn/ttools/releases/
 ```
 
 ## 使用实例
-#### z
+#### SVNALL_REPOSITORIES
 环境变量，全局配置仓库，可在执行命令时自动读取， 仓库的地址配置格式：```{仓库路径}[#{查询深度}]```，
 
 其中查询深度可不指定，默认值为2，多个使用冒号[```:```]分割，
 
 例如：
 ```
+# Linux & Mac中设置环境全局仓库
 export SVNALL_REPOSITORIES=~/workspace:~/codes#3
+# Windows可通过设置环境变量SVNALL_REPOSITORIES解决
 ```
 
 #### SVNALL_DEPTH
