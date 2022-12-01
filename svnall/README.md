@@ -12,7 +12,7 @@ https://github.com/ns-cn/ttools/releases/
 ```
 
 ## 使用实例
-#### SVNALL_REPOSITORIES
+#### z
 环境变量，全局配置仓库，可在执行命令时自动读取， 仓库的地址配置格式：```{仓库路径}[#{查询深度}]```，
 
 其中查询深度可不指定，默认值为2，多个使用冒号[```:```]分割，
@@ -48,4 +48,5 @@ export SVNALL_DEPTH=3
 > svnall update -d 3 ~/workspace ~/workbeach      # 向下遍历三层查找svn仓库
 > svnall update -d 3 ~/workspace#2 ~/workbeach    # 通用遍历三层，但workspace只向下遍历2层
 > svnall update -d 3 -e ~/workspace#2 ~/workbeach # 仅执行workspace和workbeach目录的svn update，忽略环境变量中的配置
+> svnall update -d 3 -et ~/workspace#2 ~/workbeach # 即便已经成功再文件夹中执行了svn update，继续向下查找其他仓库
 ```
