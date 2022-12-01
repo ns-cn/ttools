@@ -20,20 +20,28 @@ func initEnv(args []string) (repositories []repository, err error) {
 	}
 	repositories = make([]repository, 0)
 	wrongRepositories := make([]string, 0)
-	workdir, err := os.Getwd()
 	if err != nil {
 		return
 	}
 	unparsedRepositories := make([]string, 0)
 	if len(args) > 0 {
 		unparsedRepositories = append(unparsedRepositories, args...)
-	} else {
+	}
+	if !exclude {
 		envRepositories := os.Getenv(ENV_REPOSITORIES)
-		strings.Split(envRepositories, "#")
+		for _, unparsedRepository := range strings.Split(envRepositories, SPLITOR_REPOSITORY) {
+			if unparsedRepository != "" {
+				unparsedRepositories = append(unparsedRepositories, unparsedRepository)
+			}
+		}
+	}
+	if unparsedRepositories == nil || len(unparsedRepositories) == 0 {
+		err = fmt.Errorf("尚未指定更新仓库地址,可选参数或环境变量方式\n")
+		return
 	}
 	// 从参数中读取
 	for _, unparsedRepository := range unparsedRepositories {
-		repository, err := arg2Repo(workdir, unparsedRepository)
+		repository, err := parseRepository(unparsedRepository)
 		if err > 0 {
 			wrongRepositories = append(wrongRepositories, unparsedRepository)
 		} else {
@@ -41,7 +49,7 @@ func initEnv(args []string) (repositories []repository, err error) {
 		}
 	}
 	if len(wrongRepositories) != 0 {
-		err = fmt.Errorf("wrong repository format: %v\n", wrongRepositories)
+		err = fmt.Errorf("wrong repository: %v\n", wrongRepositories)
 	}
 	return
 }
@@ -50,12 +58,8 @@ func initEnv(args []string) (repositories []repository, err error) {
 arg2Repo: 将特定的参数转换为对应的仓库地址信息
 格式要求:仓库地址路径[#寻址深度]
 */
-func arg2Repo(workdir, arg string) (repository, int) {
-	// 还原环境
-	defer func(dir string) {
-		_ = os.Chdir(dir)
-	}(workdir)
-	splited := strings.Split(arg, SPLITOR_DEPTH)
+func parseRepository(unparsedRepository string) (repository, int) {
+	splited := strings.Split(unparsedRepository, SPLITOR_DEPTH)
 	if len(splited) > 2 || splited[0] == "" {
 		return repository{}, ERR_FORMAT_ARG
 	} else {
@@ -68,10 +72,14 @@ func arg2Repo(workdir, arg string) (repository, int) {
 			}
 		}
 		dir := splited[0]
-		err = os.Chdir(dir)
-		if err != nil {
+		if !isDirExists(dir) {
 			return repository{}, ERR_ACCESS
 		}
-		return repository{dir: splited[0], depth: simpleDepth}, NO_ERR
+		return repository{dir: dir, depth: simpleDepth}, NO_ERR
 	}
+}
+
+func isDirExists(path string) bool {
+	state, err := os.Stat(path)
+	return err == nil && state.IsDir()
 }
