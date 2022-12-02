@@ -16,3 +16,6 @@
 # vendor/
 /lines/built/
 /svnall/built/
+
+.DS_Store
+*/.DS_Store

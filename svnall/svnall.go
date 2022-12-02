@@ -11,7 +11,7 @@ const (
 	ENV_DEPTH          = "SVNALL_DEPTH"
 	DEFAULT_DEPTH      = 2 // 默认的遍历深度
 	SPLITOR_DEPTH      = "#"
-	SPLITOR_REPOSITORY = ":"
+	SPLITOR_REPOSITORY = ";"
 	NO_ERR             = 0 // 无异常
 	ERR_FORMAT_ARG     = 1 // 参数格式
 	ERR_ACCESS         = 2 // 路径不合法,或无访问权限
