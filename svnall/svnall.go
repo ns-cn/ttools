@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/ns-cn/ttools"
 	"github.com/spf13/cobra"
 	"os"
 )
