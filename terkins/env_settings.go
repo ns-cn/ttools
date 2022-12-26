@@ -6,14 +6,11 @@ import (
 	"strings"
 )
 
-func initSetting() {
+func ReadSetting() {
 	envHost, _ = os.LookupEnv(TERKINS_HOST)
 	envUser, _ = os.LookupEnv(TERKINS_USER)
 	envPass, _ = os.LookupEnv(TERKINS_PASS)
 	envEncrypted, _ = os.LookupEnv(TERKINS_ENCRYPTED)
-}
-
-func parseInfo() {
 	if host == "" {
 		host = envHost
 	}

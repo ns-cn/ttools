@@ -6,16 +6,6 @@ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/inconshreveable/mousetrap v1.0.1/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
-github.com/ns-cn/goter v0.0.0-20221215082051-b8c58f122f3c h1:Fm00ou+gmVtYC6fKvuJuJgQZSXAoF+jZh6RJenDcUe0=
-github.com/ns-cn/goter v0.0.0-20221215082051-b8c58f122f3c/go.mod h1:fDFsTqtJ2cGytfXzDhZPn9ug/PM1ZwJsNEi5zIFNpzc=
-github.com/ns-cn/goter v0.0.0-20221216070941-f257f976c5a9 h1:LLM+Rq7an0IyeW7kLMq/zXEkbqi2lW0RbOoqTpcJPxk=
-github.com/ns-cn/goter v0.0.0-20221216070941-f257f976c5a9/go.mod h1:fDFsTqtJ2cGytfXzDhZPn9ug/PM1ZwJsNEi5zIFNpzc=
-github.com/ns-cn/goter v0.0.0-20221216074952-74c1d1551b9f h1:WKpBj8rSPYD2rYrk3+89Tsm9SpgEfJL4w+hpvbGrZ/E=
-github.com/ns-cn/goter v0.0.0-20221216074952-74c1d1551b9f/go.mod h1:fDFsTqtJ2cGytfXzDhZPn9ug/PM1ZwJsNEi5zIFNpzc=
-github.com/ns-cn/goter v0.0.0-20221216081548-c4a899bab70f h1:wOzPMoZEWte5iblc4Uo80RJwWe8flqs2ib7BJMjTuc0=
-github.com/ns-cn/goter v0.0.0-20221216081548-c4a899bab70f/go.mod h1:fDFsTqtJ2cGytfXzDhZPn9ug/PM1ZwJsNEi5zIFNpzc=
-github.com/ns-cn/goter v0.0.0-20221216083104-51594a36eb0a h1:i5lL0aVmsa7in39+y6vC5ztCn6NsCRXGYeDZXv5Xou8=
-github.com/ns-cn/goter v0.0.0-20221216083104-51594a36eb0a/go.mod h1:fDFsTqtJ2cGytfXzDhZPn9ug/PM1ZwJsNEi5zIFNpzc=
 github.com/ns-cn/goter v0.0.0-20221216084752-621edca20170 h1:22cMLSBUOHRvdJX4Jcb7Xfr7o6dh49Xd+sS8oR4rhxY=
 github.com/ns-cn/goter v0.0.0-20221216084752-621edca20170/go.mod h1:fDFsTqtJ2cGytfXzDhZPn9ug/PM1ZwJsNEi5zIFNpzc=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

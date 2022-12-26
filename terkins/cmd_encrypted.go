@@ -13,8 +13,7 @@ var CmdEncrypted = &cobra.Command{
 	Use:   "encrypt",
 	Short: "",
 	Run: func(cmd *cobra.Command, args []string) {
-		initSetting()
-		parseInfo()
+		ReadSetting()
 		goter.Required(user, func(u string) bool { return u == "" }, "run without username", nil)
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Printf("Enter password for %s: ", user)
