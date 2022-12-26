@@ -5,11 +5,11 @@ import (
 )
 
 func main() {
-	root := goter.Root("terkins", "tool to operate jenkins with terminal", VERSION)
-	root.AddCommand(cmdBindAll(CmdJobs))
-	root.AddCommand(cmdBindAll(CmdJob))
-	root.AddCommand(cmdBindAll(CmdBuild))
-	root.AddCommand(cmdBind(CmdEncrypted, FlagPass, FlagUser, FlagEncrypt))
+	root := goter.NewRootCmd("terkins", "tool to operate jenkins with terminal", VERSION)
+	root.AddCommand(CmdJobs.Bind(flagHost, flagUser, flagPass, flagEncrypt))
+	root.AddCommand(CmdJob.Bind(flagHost, flagUser, flagPass, flagEncrypt))
+	root.AddCommand(CmdBuild.Bind(flagHost, flagUser, flagPass, flagEncrypt, flagInfoToBuild))
+	root.AddCommand(CmdEncrypted.Bind(flagPass, flagUser))
 	// 数据源
 	_ = root.Execute()
 }

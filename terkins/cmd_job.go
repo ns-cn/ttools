@@ -10,7 +10,7 @@ import (
 	"sync"
 )
 
-var CmdJob = &cobra.Command{
+var CmdJob = goter.Command{Cmd: &cobra.Command{
 	Use:   "job",
 	Short: "",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -58,4 +58,4 @@ var CmdJob = &cobra.Command{
 			fmt.Println(result)
 		}
 	},
-}
+}}

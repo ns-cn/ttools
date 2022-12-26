@@ -1,11 +1,14 @@
 package main
 
-import "github.com/spf13/cobra"
+import (
+	"github.com/ns-cn/goter"
+	"github.com/spf13/cobra"
+)
 
-var CmdJobs = &cobra.Command{
+var CmdJobs = goter.Command{Cmd: &cobra.Command{
 	Use:   "jobs",
 	Short: "",
 	Run: func(cmd *cobra.Command, args []string) {
 		_ = cmd.Help()
 	},
-}
+}}

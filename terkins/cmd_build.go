@@ -3,11 +3,12 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/ns-cn/goter"
 	"github.com/spf13/cobra"
 	"os"
 )
 
-var CmdBuild = &cobra.Command{
+var CmdBuild = goter.Command{Cmd: &cobra.Command{
 	Use:   "build",
 	Short: "",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -21,4 +22,4 @@ var CmdBuild = &cobra.Command{
 			fmt.Println(string(line))
 		}
 	},
-}
+}}

@@ -9,12 +9,12 @@ import (
 	"os"
 )
 
-var CmdEncrypted = &cobra.Command{
+var CmdEncrypted = goter.Command{Cmd: &cobra.Command{
 	Use:   "encrypt",
 	Short: "",
 	Run: func(cmd *cobra.Command, args []string) {
 		ReadSetting()
-		goter.Required(user, func(u string) bool { return u == "" }, "run without username", nil)
+		goter.Required(user, func(u string) bool { return u != "" }, "run without username", nil)
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Printf("Enter password for %s: ", user)
 		inputPass, _ := reader.ReadString('\n')
@@ -24,4 +24,4 @@ var CmdEncrypted = &cobra.Command{
 			fmt.Printf("系统参数配置了%s的加密密码，但与刚输入的密码不匹配，请检查\n", user)
 		}
 	},
-}
+}}
