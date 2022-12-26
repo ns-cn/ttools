@@ -14,15 +14,15 @@ var CmdEncrypted = goter.Command{Cmd: &cobra.Command{
 	Short: "",
 	Run: func(cmd *cobra.Command, args []string) {
 		ReadSetting()
-		goter.Required(user, func(u string) bool { return u != "" }, "run without username", nil)
+		goter.Required(envUser, func(u string) bool { return u != "" }, "run without username", nil)
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Printf("Enter password for %s: ", user)
+		fmt.Printf("Enter password for %s: ", envUser)
 		inputPass, _ := reader.ReadString('\n')
 		inputPass = inputPass[:len(inputPass)-1]
-		encodedPass := hex.EncodeToString(goter.AesEncryptCBC([]byte(inputPass), goter.GetKey(user)))
+		encodedPass := hex.EncodeToString(goter.AesEncryptCBC([]byte(inputPass), goter.GetKey(envUser)))
 		fmt.Printf("加密后的密码: %s\n", encodedPass)
-		if envUser == user && isEncrypted && envPass != encodedPass {
-			fmt.Printf("系统参数配置了%s的加密密码，但与刚输入的密码不匹配，请检查\n", user)
+		if sysEnvUser == envUser && isEncrypted && sysEnvPass != encodedPass {
+			fmt.Printf("系统参数配置了%s的加密密码，但与刚输入的密码不匹配，请检查\n", envUser)
 		}
 	},
 }}

@@ -16,9 +16,9 @@ var CmdJob = goter.Command{Cmd: &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ReadSetting()
 		getSession()
-		goter.Required(host, func(u string) bool { return u != "" }, "run without host", func() { _ = cmd.Help() })
-		goter.Required(user, func(u string) bool { return u != "" }, "run without username", func() { _ = cmd.Help() })
-		goter.Required(pass, func(u string) bool { return u != "" }, "run without password", func() { _ = cmd.Help() })
+		goter.Required(envHost, func(u string) bool { return u != "" }, "run without envHost", func() { _ = cmd.Help() })
+		goter.Required(envUser, func(u string) bool { return u != "" }, "run without username", func() { _ = cmd.Help() })
+		goter.Required(envPass, func(u string) bool { return u != "" }, "run without password", func() { _ = cmd.Help() })
 		filters := make([]*regexp.Regexp, 0)
 		if len(args) > 0 {
 			for _, arg := range args {

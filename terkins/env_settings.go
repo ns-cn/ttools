@@ -4,29 +4,28 @@ import (
 	"encoding/hex"
 	"github.com/ns-cn/goter"
 	"os"
-	"strings"
 )
 
 func ReadSetting() {
-	envHost, _ = os.LookupEnv(TERKINS_HOST)
-	envUser, _ = os.LookupEnv(TERKINS_USER)
-	envPass, _ = os.LookupEnv(TERKINS_PASS)
-	envEncrypted, _ = os.LookupEnv(TERKINS_ENCRYPTED)
-	if host == "" {
-		host = envHost
+	sysEnvHost, _ = os.LookupEnv(TERKINS_HOST)
+	sysEnvUser, _ = os.LookupEnv(TERKINS_USER)
+	sysEnvPass, _ = os.LookupEnv(TERKINS_PASS)
+	sysEnvEncrypted, _ = os.LookupEnv(TERKINS_ENCRYPTED)
+	if envHost == "" {
+		envHost = sysEnvHost
 	}
-	if user == "" {
-		user = envUser
+	if envUser == "" {
+		envUser = sysEnvUser
 	}
-	if pass == "" {
-		pass = envPass
+	if envPass == "" {
+		envPass = sysEnvPass
 	}
-	if encrypted == "" {
-		encrypted = envEncrypted
+	if envEncrypted == "" {
+		envEncrypted = sysEnvEncrypted
 	}
-	isEncrypted = strings.ToUpper(encrypted) == "Y" || envEncrypted == ""
+	isEncrypted = goter.IsYes(envEncrypted, true)
 	if isEncrypted {
-		hexBytes, _ := hex.DecodeString(pass)
-		pass = string(goter.AesDecryptCBC(hexBytes, goter.GetKey(user)))
+		hexBytes, _ := hex.DecodeString(envPass)
+		envPass = string(goter.AesDecryptCBC(hexBytes, goter.GetKey(envUser)))
 	}
 }

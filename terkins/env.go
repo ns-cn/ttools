@@ -9,31 +9,31 @@ const (
 	TERKINS_ENCRYPTED = "TERKINS_ENCRYPTED"
 )
 
+// 通用的环境变量及参数
 var (
 	// effected setting
-	host      = ""
-	user      = ""
-	pass      = ""
-	encrypted = ""
-	debug     = ""
-
-	flagHost    = goter.CmdStringFlag{P: &host, Name: "host", Shorthand: "H", Value: "", Usage: "host of jenkins, can use ENV TERKINS_HOST instead"}
-	flagUser    = goter.CmdStringFlag{P: &user, Name: "user", Shorthand: "U", Value: "", Usage: "user of jenkins, can use ENV TERKINS_USER instead"}
-	flagPass    = goter.CmdStringFlag{P: &pass, Name: "password", Shorthand: "P", Value: "", Usage: "password of jenkins, can use ENV TERKINS_PASS instead"}
-	flagEncrypt = goter.CmdStringFlag{P: &encrypted, Name: "encrypted", Shorthand: "E", Value: "", Usage: "password encrypted: Y/N , can use TERKINS_ENCRYPTED instead"}
-	flagDebug   = goter.CmdStringFlag{P: &debug, Name: "debug", Shorthand: "D", Value: "N", Usage: "debug: Y/N"}
-
-	isEncrypted = true
-	// env from system
 	envHost      = ""
 	envUser      = ""
 	envPass      = ""
 	envEncrypted = ""
+	envDebug     = ""
+
+	flagHost    = goter.CmdStringFlag{P: &envHost, Name: "envHost", Shorthand: "H", Value: "", Usage: "envHost of jenkins, can use ENV TERKINS_HOST instead"}
+	flagUser    = goter.CmdStringFlag{P: &envUser, Name: "envUser", Shorthand: "U", Value: "", Usage: "envUser of jenkins, can use ENV TERKINS_USER instead"}
+	flagPass    = goter.CmdStringFlag{P: &envPass, Name: "password", Shorthand: "P", Value: "", Usage: "password of jenkins, can use ENV TERKINS_PASS instead"}
+	flagEncrypt = goter.CmdStringFlag{P: &envEncrypted, Name: "envEncrypted", Shorthand: "E", Value: "", Usage: "password envEncrypted: Y/N , can use TERKINS_ENCRYPTED instead"}
+	flagDebug   = goter.CmdStringFlag{P: &envDebug, Name: "envDebug", Shorthand: "D", Value: "N", Usage: "envDebug: Y/N"}
+
+	isEncrypted = true
+	// env from system
+	sysEnvHost      = ""
+	sysEnvUser      = ""
+	sysEnvPass      = ""
+	sysEnvEncrypted = ""
 )
 
 // 构建使用的参数
 var (
-	infoToBuild     = ""
-	isInfoToBuild   = true
-	flagInfoToBuild = goter.CmdStringFlag{P: &infoToBuild, Name: "info", Shorthand: "I", Value: "", Usage: "info each job to build or not"}
+	envBuildInfo    = ""
+	flagInfoToBuild = goter.CmdStringFlag{P: &envBuildInfo, Name: "info", Shorthand: "I", Value: "Y", Usage: "info each job to build or not"}
 )
