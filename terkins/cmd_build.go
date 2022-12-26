@@ -12,6 +12,11 @@ var CmdBuild = goter.Command{Cmd: &cobra.Command{
 	Use:   "build",
 	Short: "",
 	Run: func(cmd *cobra.Command, args []string) {
+		ReadSetting()
+		goter.Required(host, func(u string) bool { return u != "" }, "run without host", func() { _ = cmd.Help() })
+		goter.Required(user, func(u string) bool { return u != "" }, "run without username", func() { _ = cmd.Help() })
+		goter.Required(pass, func(u string) bool { return u != "" }, "run without password", func() { _ = cmd.Help() })
+		getSession()
 		fmt.Println("----------")
 		reader := bufio.NewReader(os.Stdin)
 		for {

@@ -18,6 +18,7 @@ var CmdEncrypted = goter.Command{Cmd: &cobra.Command{
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Printf("Enter password for %s: ", user)
 		inputPass, _ := reader.ReadString('\n')
+		inputPass = inputPass[:len(inputPass)-1]
 		encodedPass := hex.EncodeToString(goter.AesEncryptCBC([]byte(inputPass), goter.GetKey(user)))
 		fmt.Printf("加密后的密码: %s\n", encodedPass)
 		if envUser == user && isEncrypted && envPass != encodedPass {

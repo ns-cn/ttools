@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/hex"
 	"github.com/ns-cn/goter"
 	"os"
 	"strings"
@@ -25,6 +26,7 @@ func ReadSetting() {
 	}
 	isEncrypted = strings.ToUpper(encrypted) == "Y" || envEncrypted == ""
 	if isEncrypted {
-		pass = string(goter.AesEncryptCBC([]byte(pass), goter.GetKey(user)))
+		hexBytes, _ := hex.DecodeString(pass)
+		pass = string(goter.AesDecryptCBC(hexBytes, goter.GetKey(user)))
 	}
 }

@@ -13,7 +13,10 @@ func getSession() *gojenkins.Jenkins {
 	if session != nil {
 		return session
 	}
-	jenkins := gojenkins.CreateJenkins(nil, "http://172.20.21.1:8080/", "tangyujun", "2V@3EYw^vXQS")
+	if debug == "Y" {
+		fmt.Printf("terkins://%s@%s(using password: %s)\n", host, user, pass)
+	}
+	jenkins := gojenkins.CreateJenkins(nil, host, user, pass)
 	_, err := jenkins.Init(context.Background())
 	if err != nil {
 		fmt.Println(err)
