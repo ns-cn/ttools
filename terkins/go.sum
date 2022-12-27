@@ -6,6 +6,8 @@ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/inconshreveable/mousetrap v1.0.1/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
+github.com/liushuochen/gotable v0.0.0-20221119160816-1113793e7092 h1:u9I3sJ+uTakxnRrvuYJGsEi4SvEMN+yB47WWGDHHxIk=
+github.com/liushuochen/gotable v0.0.0-20221119160816-1113793e7092/go.mod h1:CxUy8nDvutaC1pOfaG9TRoYwdHHqoNstSPPKhomC9k8=
 github.com/ns-cn/goter v0.0.0-20221226060409-3a05eb605b17 h1:13tLzPgdxWdBiVjNEXcOncuKAYtO2yGgbaIODFliPsw=
 github.com/ns-cn/goter v0.0.0-20221226060409-3a05eb605b17/go.mod h1:fDFsTqtJ2cGytfXzDhZPn9ug/PM1ZwJsNEi5zIFNpzc=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

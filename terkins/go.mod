@@ -10,6 +10,7 @@ require (
 
 require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/liushuochen/gotable v0.0.0-20221119160816-1113793e7092 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/net v0.4.0 // indirect
 )
