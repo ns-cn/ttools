@@ -11,7 +11,7 @@ import (
 
 var CmdEncrypted = goter.Command{Cmd: &cobra.Command{
 	Use:   "encrypt",
-	Short: "",
+	Short: "使用内置的加密方法加密用户密码",
 	Run: func(cmd *cobra.Command, args []string) {
 		ReadSetting()
 		goter.Required(envUser, func(u string) bool { return u != "" }, "run without username", nil)

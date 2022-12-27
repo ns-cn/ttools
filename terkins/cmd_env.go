@@ -10,7 +10,7 @@ import (
 
 var CmdEnv = goter.Command{Cmd: &cobra.Command{
 	Use:   "env",
-	Short: "",
+	Short: "查看当前已配置的变量（含命令行参数）",
 	Run: func(cmd *cobra.Command, args []string) {
 		sysEnvHost, _ = os.LookupEnv(TERKINS_HOST)
 		sysEnvUser, _ = os.LookupEnv(TERKINS_USER)

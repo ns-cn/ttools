@@ -14,7 +14,7 @@ import (
 
 var CmdBuild = goter.Command{Cmd: &cobra.Command{
 	Use:   "build",
-	Short: "",
+	Short: "构建具体的任务，可选命令行流方式或参数方式",
 	Run: func(cmd *cobra.Command, args []string) {
 		ReadSetting()
 		goter.Required(envHost, func(u string) bool { return u != "" }, "run without envHost", func() { _ = cmd.Help() })

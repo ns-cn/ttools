@@ -12,7 +12,7 @@ import (
 
 var CmdJob = goter.Command{Cmd: &cobra.Command{
 	Use:   "job",
-	Short: "",
+	Short: "查看当前用户的所有可用的构建任务",
 	Run: func(cmd *cobra.Command, args []string) {
 		ReadSetting()
 		getSession()
